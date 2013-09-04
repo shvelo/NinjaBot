@@ -29,14 +29,16 @@ bot = Cinch::Bot.new do
 			info "command: #{command}"
 			args = message
 
-			if command == "channel" then
+			if command == "channel" || command == "chn" then
 				Channel("#EvilNinja").send(args.join " ")
-			elsif command == "server" then
+			elsif command == "message" || command == "msg" then
+				Channel(args.shift).send(args.join " ")
+			elsif command == "server" || command == "srv" then
 				irc.send(args.join " ")
 			elsif command == "op" then
 				User("chanserv").send("op #EvilNinja shvelo")
-			elsif command == "join" then
-				join(args.join " ")
+			elsif command == "join" || command == "jn" then
+				Channel(args.join " ").join
 			end
 		end
 	end
