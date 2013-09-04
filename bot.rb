@@ -30,18 +30,20 @@ bot = Cinch::Bot.new do
 			args = message
 
 			if command == "channel" then
-				Channel(channels[0]).send(args.join " ")
+				Channel("#EvilNinja").send(args.join " ")
 			elsif command == "server" then
-				m.server.send(args.join " ")
+				irc.send(args.join " ")
 			elsif command == "op" then
-				User("chanserv").send("op shvelo \#EvilNinja")
+				User("chanserv").send("op #EvilNinja shvelo")
+			elsif command == "join" then
+				join(args.join " ")
 			end
 		end
 	end
 
 	on :connect do
 		User("nickserv").send("identify #{@password}")
-		User("chanserv").send("op #{@nick} \#EvilNinja")
+		User("chanserv").send("op \#EvilNinja")
 	end
 end
 
