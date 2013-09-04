@@ -21,10 +21,12 @@ bot = Cinch::Bot.new do
 		m.channel.action "brings #{m.user.nick} a cup of coffee"
 	end
 
-	on :private do |m|
+	on :privmsg do |m|
+		info "Received private message from #{m.user.nick}"
 		if m.user.nick == "shvelo" then
 			message = m.text.split " "
 			command = message.shift
+			info "command: #{command}"
 			args = message
 
 			if command == "channel" then
