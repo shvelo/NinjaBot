@@ -10,6 +10,7 @@ bot = Cinch::Bot.new do
 	  	c.user = c.nick
 	    c.encoding = "UTF-8"
 	    c.password = "dr-ninja"
+	    c.master = "shvelo"
 	end
 
 	on :message, "hello" do |m|
@@ -18,6 +19,20 @@ bot = Cinch::Bot.new do
 
 	on :message, "!coffee" do |m|
 		m.channel.action "brings #{m.user.nick} a cup of coffee"
+	end
+
+	on :private do |m|
+		if m.user.nick == @master then
+			message = m.text.split " "
+			command = message.shift
+			args = message
+
+			if command == "channel" then
+				Channel(channels[0]).send(args.join " ")
+			elsif command == "server" then
+				m.server.send(args.join " ")
+			end
+		end
 	end
 
 	on :connect do
