@@ -33,6 +33,8 @@ bot = Cinch::Bot.new do
 				Channel("#EvilNinja").send(args.join " ")
 			elsif command == "message" || command == "msg" then
 				Channel(args.shift).send(args.join " ")
+			elsif command == "action" || command == "ac" then
+				Channel(args.shift).action(args.join " ")
 			elsif command == "server" || command == "srv" then
 				irc.send(args.join " ")
 			elsif command == "op" then
