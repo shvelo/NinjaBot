@@ -23,7 +23,7 @@ bot = Cinch::Bot.new do
 
 	on :privmsg do |m|
 		info "Received private message from #{m.user.nick}"
-		if m.user.nick == "shvelo" then
+		if m.user.nick == "shvelo" && m.user.authed? then
 			message = m.message.split " "
 			command = message.shift
 			info "command: #{command}"
