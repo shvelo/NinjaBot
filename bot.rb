@@ -22,7 +22,7 @@ bot = Cinch::Bot.new do
 	end
 
 	on :private do |m|
-		if m.user.nick == @master then
+		if m.user.nick == "shvelo" then
 			message = m.text.split " "
 			command = message.shift
 			args = message
@@ -31,6 +31,8 @@ bot = Cinch::Bot.new do
 				Channel(channels[0]).send(args.join " ")
 			elsif command == "server" then
 				m.server.send(args.join " ")
+			elsif command == "op" then
+				User("chanserv").send("op shvelo \#EvilNinja")
 			end
 		end
 	end
