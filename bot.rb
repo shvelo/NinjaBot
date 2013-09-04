@@ -21,6 +21,16 @@ bot = Cinch::Bot.new do
 		m.channel.action "brings #{m.user.nick} a cup of coffee"
 	end
 
+	on :message, "!pizza" do |m|
+		messages = [
+			"brings #{m.user.nick} a hot slice of pepperoni pizza",
+			"brings #{m.user.nick} a cold slice of pizza",
+			"brings #{m.user.nick} a slice of mushroom pizza",
+			"throws #{m.user.nick} a slice of evil-looking pizza"
+		]
+		m.channel.action messages.sample
+	end
+
 	on :privmsg do |m|
 		info "Received private message from #{m.user.nick}"
 		if m.user.nick == "shvelo" && m.user.authed? then
