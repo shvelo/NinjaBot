@@ -26,8 +26,9 @@ bot = Cinch::Bot.new do
 	    c.master = "shvelo"
 	end
 
-	on :message, /hello\,? ?#{bot().nick}/i do |m|
-		m.reply "Hello, #{m.user.nick}"
+	on :message, /hello/i do |m|
+		nick = bot().nick()
+		m.reply "Hello, #{m.user.nick}" if m.message.match /#{nick}/
 	end
 
 	on :message, /^\!coffee/ do |m|
@@ -98,7 +99,6 @@ bot = Cinch::Bot.new do
 	end
 
 	on :connect do
-		User("nickserv").send("identify #{@password}")
 		User("chanserv").send("op #EvilNinja")
 	end
 end
