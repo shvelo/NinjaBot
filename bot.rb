@@ -79,12 +79,12 @@ bot = Cinch::Bot.new do
 	end
 
     on :message, /^\!source/ do |m|
-        m.channel.send "Find me on GitHub: https://github.com/shvelo/EvilNinja"
+        m.channel.send "Find me on GitHub: https://github.com/shvelo/NinjaBot"
     end
 
     on :message, /^\!about/ do |m|
         m.channel.send "NinjaBot by Nick Shvelidze"
-        m.channel.send "Find me on GitHub: https://github.com/shvelo/EvilNinja"
+        m.channel.send "Find me on GitHub: https://github.com/shvelo/NinjaBot"
     end
 
     on :message, /^\!(help|commands)/ do |m|
