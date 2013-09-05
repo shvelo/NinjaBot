@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'cinch'
+require 'gameidea'
 
 bot = Cinch::Bot.new do
   	configure do |c|
@@ -47,6 +48,11 @@ bot = Cinch::Bot.new do
 			"brings #{m.user.nick} a box of Alpen Gold"
 		]
 		m.channel.action messages.sample
+	end
+
+	on :message, "!gameidea" do |m|
+		idea = gameidea
+		m.channel.send "#{idea[:where]} #{idea[:who]} #{idea[:what]}"
 	end
 
 	on :privmsg do |m|
