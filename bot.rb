@@ -16,11 +16,20 @@ def serve(m, messages)
 	m.channel.action message
 end
 
-if File.exist? "config.yml" then
-    config = YAML::load_file "config.yml"
+if ! ARGV[0].nil? then
+    config_file = ARGV[0] 
+    if config_file.match(/\.(yaml|yml)$/).nil? && (File.exist? config_file + ".yml") then
+        config_file = config_file + ".yml"
+    end
+elsif File.exist? "config.yml"
+    config_file = "config.yml"
 else
-    config = YAML::load_file "config.default.yml"
+    config_file = "config.default.yml"
 end
+
+puts "Using file #{config_file}"
+
+config = YAML::load_file config_file
 
 bot = Cinch::Bot.new do
   	configure do |c|
