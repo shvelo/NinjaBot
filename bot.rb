@@ -28,7 +28,7 @@ bot = Cinch::Bot.new do
 
 	on :message, /hello/i do |m|
 		nick = bot().nick()
-		m.reply "Hello, #{m.user.nick}" if m.message.match /#{nick}/
+		m.reply "Hello, #{m.user.nick}" if m.message.match /#{nick}[^\w]*$/
 	end
 
 	on :message, /^\!coffee/ do |m|
