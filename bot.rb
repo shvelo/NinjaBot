@@ -123,6 +123,7 @@ bot = Cinch::Bot.new do
     on :message, /^\!(help|commands)/ do |m|
         m.channel.send "Serve food: !coffee, !pizza, !chocolate"
         m.channel.send "Generate game ideas: !gameidea"
+        m.channel.send "See available domain names: !domain <name>"
         m.channel.send "About NinjaBot: !about"
     end
 
