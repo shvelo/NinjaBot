@@ -84,6 +84,7 @@ bot = Cinch::Bot.new do
 
     on :message, /^\!about/ do |m|
         m.channel.send "NinjaBot by Nick Shvelidze"
+        m.channel.send "Discuss: #EvilNinja on FreeNode (irc.freenode.net)"
         m.channel.send "Find me on GitHub: https://github.com/shvelo/NinjaBot"
     end
 
