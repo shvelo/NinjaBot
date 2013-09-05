@@ -78,6 +78,21 @@ bot = Cinch::Bot.new do
 		m.channel.send "#{idea[:where]} #{idea[:who]} #{idea[:what]}"
 	end
 
+    on :message, /^\!source/ do |m|
+        m.channel.send "Find me on GitHub: https://github.com/shvelo/EvilNinja"
+    end
+
+    on :message, /^\!about/ do |m|
+        m.channel.send "NinjaBot by Nick Shvelidze"
+        m.channel.send "Find me on GitHub: https://github.com/shvelo/EvilNinja"
+    end
+
+    on :message, /^\!(help|commands)/ do |m|
+        m.channel.send "Serve food: !coffee, !pizza, !chocolate"
+        m.channel.send "Generate game ideas: !gameidea"
+        m.channel.send "About NinjaBot: !about"
+    end
+
 	on :privmsg do |m|
 		info "Received private message from #{m.user.nick}"
 		if m.user.nick == config["master"] && m.user.authed? then
