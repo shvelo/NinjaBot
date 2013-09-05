@@ -2,6 +2,7 @@
 
 require 'cinch'
 require 'gameidea'
+require 'yaml'
 
 def serve(m, messages)
 	text = m.message.split " "
@@ -15,15 +16,21 @@ def serve(m, messages)
 	m.channel.action message
 end
 
+if file.exist? "config.yml" then
+    config = YAML::load_file "config.yml"
+else
+    config = YAML::load_file "config.default.yml"
+end
+
 bot = Cinch::Bot.new do
   	configure do |c|
-		c.server = "irc.freenode.org"
-		c.channels = ["#EvilNinja"]
-	  	c.nick = "NinjaBot"
-	  	c.user = c.nick
-	    c.encoding = "UTF-8"
-	    c.password = "dr-ninja"
-	    c.master = "shvelo"
+		c.server = config["server"]
+		c.channels = config["channels"]
+	  	c.nick = config["nick"]
+	  	c.user = config["user"]
+	    c.encoding = config["encoding"]
+	    c.password = config["password"]
+	    c.master = config["master"]
 	end
 
 	on :message, /hello/i do |m|
@@ -73,17 +80,17 @@ bot = Cinch::Bot.new do
 
 	on :privmsg do |m|
 		info "Received private message from #{m.user.nick}"
-		if m.user.nick == "shvelo" && m.user.authed? then
+		if m.user.nick == config["master"] && m.user.authed? then
 			message = m.message.split " "
 			command = message.shift
 			info "command: #{command}"
 			args = message
 
 			if command == "channel" || command == "chn" then
-				Channel("#EvilNinja").send(args.join " ")
+				Channel(config["default_channel"]).send(args.join " ")
 			elsif command == "topic" || command == "tp" then
 				topic = args.join " "
-				User('chanserv').send "topic #EvilNinja #{topic}"
+				User('chanserv').send "topic #{config['default_channel']} #{topic}"
 			elsif command == "message" || command == "msg" then
 				Channel(args.shift).send(args.join " ")
 			elsif command == "action" || command == "ac" then
@@ -91,7 +98,7 @@ bot = Cinch::Bot.new do
 			elsif command == "server" || command == "srv" then
 				irc.send(args.join " ")
 			elsif command == "op" then
-				User("chanserv").send("op #EvilNinja shvelo")
+				User("chanserv").send("op #{config['default_channel']} #{config['master']}")
 			elsif command == "join" || command == "jn" then
 				Channel(args.join " ").join
 			end
@@ -99,7 +106,7 @@ bot = Cinch::Bot.new do
 	end
 
 	on :connect do
-		User("chanserv").send("op #EvilNinja")
+		User("chanserv").send("op #{config['default_channel']}")
 	end
 end
 
