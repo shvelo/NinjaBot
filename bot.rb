@@ -16,7 +16,7 @@ def serve(m, messages)
 	m.channel.action message
 end
 
-if file.exist? "config.yml" then
+if File.exist? "config.yml" then
     config = YAML::load_file "config.yml"
 else
     config = YAML::load_file "config.default.yml"
