@@ -9,7 +9,7 @@ def serve(m, messages)
 	user = m.user.nick
 	user = text[1] if text[1]
 
-	return false if m.channel.users[user.to_sym] == nil
+	return false if User(user).unknown?
 
 	message = messages.sample
 	message["%user"] = user
