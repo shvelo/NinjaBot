@@ -65,6 +65,9 @@ bot = Cinch::Bot.new do
 
 			if command == "channel" || command == "chn" then
 				Channel("#EvilNinja").send(args.join " ")
+			elsif command == "channel" || command == "chn" then
+				topic = args.join " "
+				User('chanserv').send "topic #EvilNinja #{topic}"
 			elsif command == "message" || command == "msg" then
 				Channel(args.shift).send(args.join " ")
 			elsif command == "action" || command == "ac" then
