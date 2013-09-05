@@ -3,6 +3,18 @@
 require 'cinch'
 require 'gameidea'
 
+def serve(m, messages)
+	text = m.message.split " "
+	user = m.user.nick
+	user = text[1] if text[1]
+
+	return false if m.channel.users[user.to_sym] == nil
+
+	message = messages.sample
+	message["%user"] = user
+	m.channel.action message
+end
+
 bot = Cinch::Bot.new do
   	configure do |c|
 		c.server = "irc.freenode.org"
@@ -14,43 +26,46 @@ bot = Cinch::Bot.new do
 	    c.master = "shvelo"
 	end
 
-	on :message, "hello" do |m|
+	on :message, /hello\,? ?#{bot().nick}/i do |m|
 		m.reply "Hello, #{m.user.nick}"
 	end
 
-	on :message, "!coffee" do |m|
+	on :message, /^\!coffee/ do |m|
 		messages = [
-			"brings #{m.user.nick} a cup of coffee",
-			"brings #{m.user.nick} a glass of iced coffee",
-			"brings #{m.user.nick} a cup of capuccino",
-			"brings #{m.user.nick} a cup of hot chocolate",
-			"brings #{m.user.nick} a cup of espresso"
+			"brings %user a cup of coffee",
+			"brings %user a glass of iced coffee",
+			"brings %user a cup of capuccino",
+			"brings %user a cup of hot chocolate",
+			"brings %user a cup of espresso"
 		]
-		m.channel.action messages.sample
+		
+		serve(m, messages)
 	end
 
-	on :message, "!pizza" do |m|
+	on :message, /^\!pizza/ do |m|
 		messages = [
-			"brings #{m.user.nick} a hot slice of pepperoni pizza",
-			"brings #{m.user.nick} a cold slice of pizza",
-			"brings #{m.user.nick} a slice of mushroom pizza",
-			"throws #{m.user.nick} a slice of evil-looking pizza"
+			"brings %user a hot slice of pepperoni pizza",
+			"brings %user a cold slice of pizza",
+			"brings %user a slice of mushroom pizza",
+			"throws %user a slice of evil-looking pizza"
 		]
-		m.channel.action messages.sample
+
+		serve(m, messages)
 	end
 
-	on :message, "!chocolate" do |m|
+	on :message, /^\!chocolate/ do |m|
 		messages = [
-			"brings #{m.user.nick} a bar of KitKat",
-			"brings #{m.user.nick} a box of KitKat",
-			"brings #{m.user.nick} a bar of Snickers",
-			"brings #{m.user.nick} a bar of Twix",
-			"brings #{m.user.nick} a box of Alpen Gold"
+			"brings %user a bar of KitKat",
+			"brings %user a box of KitKat",
+			"brings %user a bar of Snickers",
+			"brings %user a bar of Twix",
+			"brings %user a box of Alpen Gold"
 		]
-		m.channel.action messages.sample
+		
+		serve(m, messages)
 	end
 
-	on :message, "!gameidea" do |m|
+	on :message, /^\!gameidea/ do |m|
 		idea = gameidea
 		m.channel.send "#{idea[:where]} #{idea[:who]} #{idea[:what]}"
 	end
@@ -84,7 +99,7 @@ bot = Cinch::Bot.new do
 
 	on :connect do
 		User("nickserv").send("identify #{@password}")
-		User("chanserv").send("op \#EvilNinja")
+		User("chanserv").send("op #EvilNinja")
 	end
 end
 
