@@ -18,7 +18,14 @@ bot = Cinch::Bot.new do
 	end
 
 	on :message, "!coffee" do |m|
-		m.channel.action "brings #{m.user.nick} a cup of coffee"
+		messages = [
+			"brings #{m.user.nick} a cup of coffee",
+			"brings #{m.user.nick} a glass of iced coffee",
+			"brings #{m.user.nick} a cup of capuccino",
+			"brings #{m.user.nick} a cup of hot chocolate",
+			"brings #{m.user.nick} a cup of espresso"
+		]
+		m.channel.action messages.sample
 	end
 
 	on :message, "!pizza" do |m|
@@ -27,6 +34,17 @@ bot = Cinch::Bot.new do
 			"brings #{m.user.nick} a cold slice of pizza",
 			"brings #{m.user.nick} a slice of mushroom pizza",
 			"throws #{m.user.nick} a slice of evil-looking pizza"
+		]
+		m.channel.action messages.sample
+	end
+
+	on :message, "!chocolate" do |m|
+		messages = [
+			"brings #{m.user.nick} a bar of KitKat",
+			"brings #{m.user.nick} a box of KitKat",
+			"brings #{m.user.nick} a bar of Snickers",
+			"brings #{m.user.nick} a bar of Twix",
+			"brings #{m.user.nick} a box of Alpen Gold"
 		]
 		m.channel.action messages.sample
 	end
