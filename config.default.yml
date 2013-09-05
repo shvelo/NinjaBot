@@ -1,10 +1,9 @@
-config:
-    server: "irc.freenode.org"
-    channels: 
-        - "#EvilNinja"
-    nick: "UNinjaBot"
-    user: "UNinjaBot"
-    encoding: "UTF-8"
-    password: ""
-    master: "YOUR_USERNAME"
-    default_channel: "#EvilNinja"
+server: "irc.freenode.org"
+channels: 
+    - "#EvilNinja"
+nick: "UNinjaBot"
+user: "UNinjaBot"
+encoding: "UTF-8"
+password: ""
+master: "YOUR_USERNAME"
+default_channel: "#EvilNinja"
