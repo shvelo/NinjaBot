@@ -3,6 +3,7 @@
 require 'cinch'
 require 'gameidea'
 require 'yaml'
+require 'domr'
 
 def serve(m, messages)
 	text = m.message.split " "
@@ -87,8 +88,27 @@ bot = Cinch::Bot.new do
 		m.channel.send "#{idea[:where]} #{idea[:who]} #{idea[:what]}"
 	end
 
+	on :message, /^\!domain/ do |m|
+		domain = m.message.split(" ")[1]
+		domains = domr domain, :silent
+		domains.each do |d|
+			m.channel.send d
+		end
+	end
+
     on :message, /^\!source/ do |m|
-        m.channel.send "Find me on GitHub: https://github.com/shvelo/NinjaBot"
+    	target = m.message.split(" ")[1]
+    	case target
+    	when nil
+    		m.channel.send "NinjaBot on GitHub: https://github.com/shvelo/NinjaBot"
+    	when /(ninjabot|bot)/i
+    		m.channel.send "NinjaBot on GitHub: https://github.com/shvelo/NinjaBot"
+    	when /(domr|domain)/i
+    		m.channel.send "Domr on GitHub: https://github.com/shvelo/domr"
+    	when /gameidea/i
+    		m.channel.send "Gameidea on GitHub: https://github.com/shvelo/gameidea"
+    	end
+        
     end
 
     on :message, /^\!about/ do |m|

@@ -2,11 +2,21 @@ GEM
   remote: https://rubygems.org/
   specs:
     cinch (2.0.9)
+    domr (0.3.2)
+      httparty
+      rainbow
     gameidea (3.6.1)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
+    multi_json (1.7.9)
+    multi_xml (0.5.5)
+    rainbow (1.1.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   cinch
+  domr
   gameidea
