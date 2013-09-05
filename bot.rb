@@ -90,9 +90,13 @@ bot = Cinch::Bot.new do
 
 	on :message, /^\!domain/ do |m|
 		domain = m.message.split(" ")[1]
+		m.channel.send "Querying domainr API for #{domain}"
 		domains = domr domain, :silent
 		domains.each do |d|
 			m.channel.send d
+		end
+		if domains.empty?
+			m.channel.send "None available"
 		end
 	end
 
@@ -108,7 +112,6 @@ bot = Cinch::Bot.new do
     	when /gameidea/i
     		m.channel.send "Gameidea on GitHub: https://github.com/shvelo/gameidea"
     	end
-        
     end
 
     on :message, /^\!about/ do |m|
